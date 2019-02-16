@@ -1,8 +1,14 @@
-import { tokenize, titleCaseWord, untokenize } from "./utils";
+import { tokenize, titleCaseWord, untokenize, normalize, isSpecialWord } from "./utils";
 
 export function titleCase(title: string): string {
-  const tokens = tokenize(title).map(titleCaseWord);
-  return untokenize(tokens);
+  const normalizedTokens = tokenize(title).map(normalize);
+  const titleCasedTokens = normalizedTokens.map((normalizedWord, idx) => {
+    if (idx === 0 || idx === normalizedTokens.length - 1) {
+      return titleCaseWord(normalizedWord);
+    }
+    return isSpecialWord(normalizedWord) ? normalizedWord : titleCaseWord(normalizedWord);
+  });
+  return untokenize(titleCasedTokens);
 }
 
 export default {

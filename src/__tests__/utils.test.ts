@@ -1,4 +1,4 @@
-import { tokenize, untokenize, titleCaseWord } from "../utils";
+import { tokenize, untokenize, titleCaseWord, normalize, isSpecialWord } from "../utils";
 
 describe("Utils", () => {
   describe("untokenize", () => {
@@ -31,35 +31,44 @@ describe("Utils", () => {
     });
   });
 
-  describe("titleCaseWord", () => {
-    it("capitalizes the first letter for a non-special word", () => {
-      const input = "hello";
-      const expected = "Hello";
-      const result = titleCaseWord(input);
-      expect(result).toEqual(expected);
+  describe("normalize word", () => {
+    it("returns a lowercase version of an all capital word", () => {
+      const input = "HELLO";
+      const result = normalize(input);
+      expect(result).toEqual("hello");
     });
 
-    it("does not capitalize special words", () => {
+    it("returns a lowercase version of a mixed case word", () => {
+      const input = "bYe";
+      const result = normalize(input);
+      expect(result).toEqual("bye");
+    });
+  });
+
+  describe("isSpecialWord", () => {
+    it("returns true for all special words", () => {
       const inputs = ["a", "the", "to", "at", "in", "with", "and", "but", "or"];
       expect.assertions(inputs.length);
 
       inputs.forEach(input => {
-        const result = titleCaseWord(input);
-        expect(result).toEqual(input);
+        const result = isSpecialWord(input);
+        expect(result).toEqual(true);
       });
     });
 
-    it("downcases non-first letters", () => {
-      const expected = "John";
-      const result = titleCaseWord(expected.toUpperCase());
-      expect(result).toEqual(expected);
+    it("returns false for non-special words", () => {
+      const input = "hello";
+      const result = isSpecialWord(input);
+      expect(result).toEqual(false);
     });
+  });
 
-    it("downcases all of special words", () => {
-      const resultA = titleCaseWord("A");
-      expect(resultA).toEqual("a");
-      const resultThe = titleCaseWord("THE");
-      expect(resultThe).toEqual("the");
+  describe("titleCaseWord", () => {
+    it("capitalizes the first letter for a word", () => {
+      const input = "hello";
+      const expected = "Hello";
+      const result = titleCaseWord(input);
+      expect(result).toEqual(expected);
     });
   });
 });

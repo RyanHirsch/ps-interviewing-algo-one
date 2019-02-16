@@ -8,14 +8,18 @@ export function untokenize(input: string[]): string {
   return input.join(separator);
 }
 
-export function titleCaseWord(word: string): string {
+export function normalize(input: string): string {
+  return input.toLowerCase();
+}
+
+export function isSpecialWord(word: string): boolean {
   const specialWords = ["a", "the", "to", "at", "in", "with", "and", "but", "or"];
 
   const normalizedWord = word.toLowerCase();
-  if (specialWords.includes(normalizedWord)) {
-    return normalizedWord;
-  }
+  return specialWords.includes(normalizedWord);
+}
 
-  const [first, ...rest] = normalizedWord.split("");
+export function titleCaseWord(word: string): string {
+  const [first, ...rest] = word.split("");
   return [first.toUpperCase(), ...rest].join("");
 }

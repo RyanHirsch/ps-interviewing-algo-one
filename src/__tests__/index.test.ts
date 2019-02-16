@@ -12,3 +12,10 @@ test("titleCase handles random capital letters in the source string", () => {
   const result = titleCase(input);
   expect(result).toEqual(expected);
 });
+
+test("titleCase handles special words at the beginning and end", () => {
+  const input = "a lean to";
+  const expected = "A Lean To";
+  const result = titleCase(input);
+  expect(result).toEqual(expected);
+});
