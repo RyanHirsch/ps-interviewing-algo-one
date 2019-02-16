@@ -1,4 +1,4 @@
-import { tokenize, untokenize, titleCaseWord, normalize, isSpecialWord } from "../utils";
+import { tokenize, untokenize, capitalize, lowercase, isSpecialWord } from "../utils";
 
 describe("Utils", () => {
   describe("untokenize", () => {
@@ -34,13 +34,13 @@ describe("Utils", () => {
   describe("normalize word", () => {
     it("returns a lowercase version of an all capital word", () => {
       const input = "HELLO";
-      const result = normalize(input);
+      const result = lowercase(input);
       expect(result).toEqual("hello");
     });
 
     it("returns a lowercase version of a mixed case word", () => {
       const input = "bYe";
-      const result = normalize(input);
+      const result = lowercase(input);
       expect(result).toEqual("bye");
     });
   });
@@ -67,7 +67,7 @@ describe("Utils", () => {
     it("capitalizes the first letter for a word", () => {
       const input = "hello";
       const expected = "Hello";
-      const result = titleCaseWord(input);
+      const result = capitalize(input);
       expect(result).toEqual(expected);
     });
   });
